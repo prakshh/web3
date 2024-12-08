@@ -1,6 +1,6 @@
 'use client'
 
-import { getFavoritesdappProgram, getFavoritesdappProgramId } from '@project/anchor'
+import { getFavoritesProgram, getFavoritesProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -10,17 +10,17 @@ import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../ui/ui-layout'
 
-export function useFavoritesdappProgram() {
+export function useFavoritesProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
-  const programId = useMemo(() => getFavoritesdappProgramId(cluster.network as Cluster), [cluster])
-  const program = useMemo(() => getFavoritesdappProgram(provider, programId), [provider, programId])
+  const programId = useMemo(() => getFavoritesProgramId(cluster.network as Cluster), [cluster])
+  const program = useMemo(() => getFavoritesProgram(provider, programId), [provider, programId])
 
   const accounts = useQuery({
-    queryKey: ['favoritesdapp', 'all', { cluster }],
-    queryFn: () => program.account.favoritesdapp.all(),
+    queryKey: ['favorites', 'all', { cluster }],
+    queryFn: () => program.account.favorites.all(),
   })
 
   const getProgramAccount = useQuery({
@@ -29,9 +29,9 @@ export function useFavoritesdappProgram() {
   })
 
   const initialize = useMutation({
-    mutationKey: ['favoritesdapp', 'initialize', { cluster }],
+    mutationKey: ['favorites', 'initialize', { cluster }],
     mutationFn: (keypair: Keypair) =>
-      program.methods.initialize().accounts({ favoritesdapp: keypair.publicKey }).signers([keypair]).rpc(),
+      program.methods.initialize().accounts({ favorites: keypair.publicKey }).signers([keypair]).rpc(),
     onSuccess: (signature) => {
       transactionToast(signature)
       return accounts.refetch()
@@ -48,19 +48,19 @@ export function useFavoritesdappProgram() {
   }
 }
 
-export function useFavoritesdappProgramAccount({ account }: { account: PublicKey }) {
+export function useFavoritesProgramAccount({ account }: { account: PublicKey }) {
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
-  const { program, accounts } = useFavoritesdappProgram()
+  const { program, accounts } = useFavoritesProgram()
 
   const accountQuery = useQuery({
-    queryKey: ['favoritesdapp', 'fetch', { cluster, account }],
-    queryFn: () => program.account.favoritesdapp.fetch(account),
+    queryKey: ['favorites', 'fetch', { cluster, account }],
+    queryFn: () => program.account.favorites.fetch(account),
   })
 
   const closeMutation = useMutation({
-    mutationKey: ['favoritesdapp', 'close', { cluster, account }],
-    mutationFn: () => program.methods.close().accounts({ favoritesdapp: account }).rpc(),
+    mutationKey: ['favorites', 'close', { cluster, account }],
+    mutationFn: () => program.methods.close().accounts({ favorites: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accounts.refetch()
@@ -68,8 +68,8 @@ export function useFavoritesdappProgramAccount({ account }: { account: PublicKey
   })
 
   const decrementMutation = useMutation({
-    mutationKey: ['favoritesdapp', 'decrement', { cluster, account }],
-    mutationFn: () => program.methods.decrement().accounts({ favoritesdapp: account }).rpc(),
+    mutationKey: ['favorites', 'decrement', { cluster, account }],
+    mutationFn: () => program.methods.decrement().accounts({ favorites: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()
@@ -77,8 +77,8 @@ export function useFavoritesdappProgramAccount({ account }: { account: PublicKey
   })
 
   const incrementMutation = useMutation({
-    mutationKey: ['favoritesdapp', 'increment', { cluster, account }],
-    mutationFn: () => program.methods.increment().accounts({ favoritesdapp: account }).rpc(),
+    mutationKey: ['favorites', 'increment', { cluster, account }],
+    mutationFn: () => program.methods.increment().accounts({ favorites: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()
@@ -86,8 +86,8 @@ export function useFavoritesdappProgramAccount({ account }: { account: PublicKey
   })
 
   const setMutation = useMutation({
-    mutationKey: ['favoritesdapp', 'set', { cluster, account }],
-    mutationFn: (value: number) => program.methods.set(value).accounts({ favoritesdapp: account }).rpc(),
+    mutationKey: ['favorites', 'set', { cluster, account }],
+    mutationFn: (value: number) => program.methods.set(value).accounts({ favorites: account }).rpc(),
     onSuccess: (tx) => {
       transactionToast(tx)
       return accountQuery.refetch()

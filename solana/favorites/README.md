@@ -1,4 +1,4 @@
-# favorites-dapp
+# favorites
 
 ## Getting Started
 

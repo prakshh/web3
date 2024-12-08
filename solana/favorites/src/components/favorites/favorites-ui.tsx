@@ -4,10 +4,10 @@ import { Keypair, PublicKey } from '@solana/web3.js'
 import { useMemo } from 'react'
 import { ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
-import { useFavoritesdappProgram, useFavoritesdappProgramAccount } from './favoritesdapp-data-access'
+import { useFavoritesProgram, useFavoritesProgramAccount } from './favorites-data-access'
 
-export function FavoritesdappCreate() {
-  const { initialize } = useFavoritesdappProgram()
+export function FavoritesCreate() {
+  const { initialize } = useFavoritesProgram()
 
   return (
     <button
@@ -20,8 +20,8 @@ export function FavoritesdappCreate() {
   )
 }
 
-export function FavoritesdappList() {
-  const { accounts, getProgramAccount } = useFavoritesdappProgram()
+export function FavoritesList() {
+  const { accounts, getProgramAccount } = useFavoritesProgram()
 
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>
@@ -40,7 +40,7 @@ export function FavoritesdappList() {
       ) : accounts.data?.length ? (
         <div className="grid md:grid-cols-2 gap-4">
           {accounts.data?.map((account) => (
-            <FavoritesdappCard key={account.publicKey.toString()} account={account.publicKey} />
+            <FavoritesCard key={account.publicKey.toString()} account={account.publicKey} />
           ))}
         </div>
       ) : (
@@ -53,8 +53,8 @@ export function FavoritesdappList() {
   )
 }
 
-function FavoritesdappCard({ account }: { account: PublicKey }) {
-  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useFavoritesdappProgramAccount({
+function FavoritesCard({ account }: { account: PublicKey }) {
+  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useFavoritesProgramAccount({
     account,
   })
 

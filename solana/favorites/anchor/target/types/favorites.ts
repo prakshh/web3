@@ -2,12 +2,12 @@
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
  * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/favoritesdapp.json`.
+ * IDL can be found at `target/idl/favorites.json`.
  */
-export type Favoritesdapp = {
+export type Favorites = {
   "address": "coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF",
   "metadata": {
-    "name": "favoritesdapp",
+    "name": "favorites",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
@@ -32,7 +32,7 @@ export type Favoritesdapp = {
           "signer": true
         },
         {
-          "name": "favoritesdapp",
+          "name": "favorites",
           "writable": true
         }
       ],
@@ -52,7 +52,7 @@ export type Favoritesdapp = {
       ],
       "accounts": [
         {
-          "name": "favoritesdapp",
+          "name": "favorites",
           "writable": true
         }
       ],
@@ -72,7 +72,7 @@ export type Favoritesdapp = {
       ],
       "accounts": [
         {
-          "name": "favoritesdapp",
+          "name": "favorites",
           "writable": true
         }
       ],
@@ -97,7 +97,7 @@ export type Favoritesdapp = {
           "signer": true
         },
         {
-          "name": "favoritesdapp",
+          "name": "favorites",
           "writable": true,
           "signer": true
         },
@@ -122,7 +122,7 @@ export type Favoritesdapp = {
       ],
       "accounts": [
         {
-          "name": "favoritesdapp",
+          "name": "favorites",
           "writable": true
         }
       ],
@@ -136,7 +136,7 @@ export type Favoritesdapp = {
   ],
   "accounts": [
     {
-      "name": "favoritesdapp",
+      "name": "favorites",
       "discriminator": [
         255,
         176,
@@ -151,7 +151,7 @@ export type Favoritesdapp = {
   ],
   "types": [
     {
-      "name": "favoritesdapp",
+      "name": "favorites",
       "type": {
         "kind": "struct",
         "fields": [

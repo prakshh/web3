@@ -4,17 +4,17 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletButton } from '../solana/solana-provider'
 import { AppHero, ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
-import { useFavoritesdappProgram } from './favoritesdapp-data-access'
-import { FavoritesdappCreate, FavoritesdappList } from './favoritesdapp-ui'
+import { useFavoritesProgram } from './favorites-data-access'
+import { FavoritesCreate, FavoritesList } from './favorites-ui'
 
-export default function FavoritesdappFeature() {
+export default function FavoritesFeature() {
   const { publicKey } = useWallet()
-  const { programId } = useFavoritesdappProgram()
+  const { programId } = useFavoritesProgram()
 
   return publicKey ? (
     <div>
       <AppHero
-        title="Favoritesdapp"
+        title="Favorites"
         subtitle={
           'Create a new account by clicking the "Create" button. The state of a account is stored on-chain and can be manipulated by calling the program\'s methods (increment, decrement, set, and close).'
         }
@@ -22,9 +22,9 @@ export default function FavoritesdappFeature() {
         <p className="mb-6">
           <ExplorerLink path={`account/${programId}`} label={ellipsify(programId.toString())} />
         </p>
-        <FavoritesdappCreate />
+        <FavoritesCreate />
       </AppHero>
-      <FavoritesdappList />
+      <FavoritesList />
     </div>
   ) : (
     <div className="max-w-4xl mx-auto">

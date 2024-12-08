@@ -5,48 +5,48 @@ use anchor_lang::prelude::*;
 declare_id!("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
 
 #[program]
-pub mod favoritesdapp {
+pub mod favorites {
     use super::*;
 
-  pub fn close(_ctx: Context<CloseFavoritesdapp>) -> Result<()> {
+  pub fn close(_ctx: Context<CloseFavorites>) -> Result<()> {
     Ok(())
   }
 
   pub fn decrement(ctx: Context<Update>) -> Result<()> {
-    ctx.accounts.favoritesdapp.count = ctx.accounts.favoritesdapp.count.checked_sub(1).unwrap();
+    ctx.accounts.favorites.count = ctx.accounts.favorites.count.checked_sub(1).unwrap();
     Ok(())
   }
 
   pub fn increment(ctx: Context<Update>) -> Result<()> {
-    ctx.accounts.favoritesdapp.count = ctx.accounts.favoritesdapp.count.checked_add(1).unwrap();
+    ctx.accounts.favorites.count = ctx.accounts.favorites.count.checked_add(1).unwrap();
     Ok(())
   }
 
-  pub fn initialize(_ctx: Context<InitializeFavoritesdapp>) -> Result<()> {
+  pub fn initialize(_ctx: Context<InitializeFavorites>) -> Result<()> {
     Ok(())
   }
 
   pub fn set(ctx: Context<Update>, value: u8) -> Result<()> {
-    ctx.accounts.favoritesdapp.count = value.clone();
+    ctx.accounts.favorites.count = value.clone();
     Ok(())
   }
 }
 
 #[derive(Accounts)]
-pub struct InitializeFavoritesdapp<'info> {
+pub struct InitializeFavorites<'info> {
   #[account(mut)]
   pub payer: Signer<'info>,
 
   #[account(
   init,
-  space = 8 + Favoritesdapp::INIT_SPACE,
+  space = 8 + Favorites::INIT_SPACE,
   payer = payer
   )]
-  pub favoritesdapp: Account<'info, Favoritesdapp>,
+  pub favorites: Account<'info, Favorites>,
   pub system_program: Program<'info, System>,
 }
 #[derive(Accounts)]
-pub struct CloseFavoritesdapp<'info> {
+pub struct CloseFavorites<'info> {
   #[account(mut)]
   pub payer: Signer<'info>,
 
@@ -54,17 +54,17 @@ pub struct CloseFavoritesdapp<'info> {
   mut,
   close = payer, // close account and return lamports to payer
   )]
-  pub favoritesdapp: Account<'info, Favoritesdapp>,
+  pub favorites: Account<'info, Favorites>,
 }
 
 #[derive(Accounts)]
 pub struct Update<'info> {
   #[account(mut)]
-  pub favoritesdapp: Account<'info, Favoritesdapp>,
+  pub favorites: Account<'info, Favorites>,
 }
 
 #[account]
 #[derive(InitSpace)]
-pub struct Favoritesdapp {
+pub struct Favorites {
   count: u8,
 }
